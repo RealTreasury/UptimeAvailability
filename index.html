@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Service Status Monitor</title>
+    <title>Cloud Service Status Monitor</title>
     <style>
         * {
             margin: 0;
@@ -20,8 +20,25 @@
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1100px;
             margin: 0 auto;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-left: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #8892b0;
+        }
+
+        .service-count {
+            color: #8892b0;
+            font-size: 0.9rem;
+            margin-top: 5px;
         }
 
         header {
@@ -241,8 +258,9 @@
 <body>
     <div class="container">
         <header>
-            <h1>Service Status Monitor</h1>
-            <p class="subtitle">Real-time status of major internet services</p>
+            <h1>Cloud Service Status Monitor</h1>
+            <p class="subtitle">Real-time status of major cloud providers, developer tools, and business services</p>
+            <p class="service-count">Monitoring <span id="service-count">0</span> services</p>
             <p class="last-updated">Last updated: <span id="update-time">Loading...</span></p>
         </header>
 
@@ -287,65 +305,355 @@
         // Service configurations with their public status API endpoints
         // These services use Statuspage.io which provides a standard API format
         const services = [
+            // === CLOUD PROVIDERS ===
             {
-                name: 'GitHub',
-                icon: '🐙',
-                statusUrl: 'https://www.githubstatus.com/api/v2/status.json',
-                pageUrl: 'https://www.githubstatus.com'
+                name: 'AWS',
+                icon: '🔶',
+                statusUrl: 'https://status.aws.amazon.com/data.json',
+                pageUrl: 'https://health.aws.amazon.com/health/status',
+                category: 'Cloud'
             },
             {
-                name: 'Cloudflare',
-                icon: '☁️',
-                statusUrl: 'https://www.cloudflarestatus.com/api/v2/status.json',
-                pageUrl: 'https://www.cloudflarestatus.com'
+                name: 'Microsoft Azure',
+                icon: '🔷',
+                statusUrl: 'https://azure.status.microsoft/api/v2/status.json',
+                pageUrl: 'https://azure.status.microsoft/en-us/status',
+                category: 'Cloud'
+            },
+            {
+                name: 'Google Cloud',
+                icon: '🌐',
+                statusUrl: 'https://status.cloud.google.com/incidents.json',
+                pageUrl: 'https://status.cloud.google.com/',
+                category: 'Cloud'
+            },
+            {
+                name: 'DigitalOcean',
+                icon: '🌊',
+                statusUrl: 'https://status.digitalocean.com/api/v2/status.json',
+                pageUrl: 'https://status.digitalocean.com',
+                category: 'Cloud'
+            },
+            {
+                name: 'Linode',
+                icon: '🟢',
+                statusUrl: 'https://status.linode.com/api/v2/status.json',
+                pageUrl: 'https://status.linode.com',
+                category: 'Cloud'
+            },
+            {
+                name: 'Heroku',
+                icon: '🟣',
+                statusUrl: 'https://status.heroku.com/api/v2/status.json',
+                pageUrl: 'https://status.heroku.com',
+                category: 'Cloud'
+            },
+
+            // === MICROSOFT SERVICES ===
+            {
+                name: 'Microsoft 365',
+                icon: '📊',
+                statusUrl: 'https://portal.office.com/api/servicestatus/status.json',
+                pageUrl: 'https://status.office.com/',
+                category: 'Microsoft'
+            },
+            {
+                name: 'Microsoft Teams',
+                icon: '👥',
+                statusUrl: 'https://portal.office.com/api/servicestatus/status.json',
+                pageUrl: 'https://status.office.com/',
+                category: 'Microsoft'
+            },
+            {
+                name: 'Outlook',
+                icon: '📧',
+                statusUrl: 'https://portal.office.com/api/servicestatus/status.json',
+                pageUrl: 'https://status.office.com/',
+                category: 'Microsoft'
+            },
+
+            // === GOOGLE SERVICES ===
+            {
+                name: 'Google Workspace',
+                icon: '📨',
+                statusUrl: 'https://www.google.com/appsstatus/json/en',
+                pageUrl: 'https://www.google.com/appsstatus/dashboard/',
+                category: 'Google'
+            },
+            {
+                name: 'YouTube',
+                icon: '▶️',
+                statusUrl: 'https://www.google.com/appsstatus/json/en',
+                pageUrl: 'https://www.google.com/appsstatus/dashboard/',
+                category: 'Google'
+            },
+
+            // === COMMUNICATION ===
+            {
+                name: 'Slack',
+                icon: '💬',
+                statusUrl: 'https://status.slack.com/api/v2.0.0/current',
+                pageUrl: 'https://status.slack.com',
+                category: 'Communication'
             },
             {
                 name: 'Discord',
-                icon: '💬',
+                icon: '🎮',
                 statusUrl: 'https://discordstatus.com/api/v2/status.json',
-                pageUrl: 'https://discordstatus.com'
+                pageUrl: 'https://discordstatus.com',
+                category: 'Communication'
             },
             {
-                name: 'Reddit',
-                icon: '🤖',
-                statusUrl: 'https://www.redditstatus.com/api/v2/status.json',
-                pageUrl: 'https://www.redditstatus.com'
-            },
-            {
-                name: 'Dropbox',
-                icon: '📦',
-                statusUrl: 'https://status.dropbox.com/api/v2/status.json',
-                pageUrl: 'https://status.dropbox.com'
+                name: 'Zoom',
+                icon: '📹',
+                statusUrl: 'https://status.zoom.us/api/v2/status.json',
+                pageUrl: 'https://status.zoom.us',
+                category: 'Communication'
             },
             {
                 name: 'Twilio',
                 icon: '📱',
                 statusUrl: 'https://status.twilio.com/api/v2/status.json',
-                pageUrl: 'https://status.twilio.com'
+                pageUrl: 'https://status.twilio.com',
+                category: 'Communication'
+            },
+
+            // === DEVELOPER TOOLS ===
+            {
+                name: 'GitHub',
+                icon: '🐙',
+                statusUrl: 'https://www.githubstatus.com/api/v2/status.json',
+                pageUrl: 'https://www.githubstatus.com',
+                category: 'Developer'
             },
             {
-                name: 'Datadog',
-                icon: '📊',
-                statusUrl: 'https://status.datadoghq.com/api/v2/status.json',
-                pageUrl: 'https://status.datadoghq.com'
+                name: 'GitLab',
+                icon: '🦊',
+                statusUrl: 'https://status.gitlab.com/api/v2/status.json',
+                pageUrl: 'https://status.gitlab.com',
+                category: 'Developer'
             },
             {
                 name: 'Bitbucket',
                 icon: '🪣',
                 statusUrl: 'https://bitbucket.status.atlassian.com/api/v2/status.json',
-                pageUrl: 'https://bitbucket.status.atlassian.com'
+                pageUrl: 'https://bitbucket.status.atlassian.com',
+                category: 'Developer'
+            },
+            {
+                name: 'Jira',
+                icon: '📋',
+                statusUrl: 'https://jira.status.atlassian.com/api/v2/status.json',
+                pageUrl: 'https://jira.status.atlassian.com',
+                category: 'Developer'
+            },
+            {
+                name: 'Confluence',
+                icon: '📝',
+                statusUrl: 'https://confluence.status.atlassian.com/api/v2/status.json',
+                pageUrl: 'https://confluence.status.atlassian.com',
+                category: 'Developer'
+            },
+            {
+                name: 'Trello',
+                icon: '📌',
+                statusUrl: 'https://trello.status.atlassian.com/api/v2/status.json',
+                pageUrl: 'https://trello.status.atlassian.com',
+                category: 'Developer'
+            },
+            {
+                name: 'CircleCI',
+                icon: '⚡',
+                statusUrl: 'https://status.circleci.com/api/v2/status.json',
+                pageUrl: 'https://status.circleci.com',
+                category: 'Developer'
             },
             {
                 name: 'npm',
                 icon: '📦',
                 statusUrl: 'https://status.npmjs.org/api/v2/status.json',
-                pageUrl: 'https://status.npmjs.org'
+                pageUrl: 'https://status.npmjs.org',
+                category: 'Developer'
             },
             {
                 name: 'Vercel',
                 icon: '▲',
                 statusUrl: 'https://www.vercel-status.com/api/v2/status.json',
-                pageUrl: 'https://www.vercel-status.com'
+                pageUrl: 'https://www.vercel-status.com',
+                category: 'Developer'
+            },
+            {
+                name: 'Netlify',
+                icon: '🌐',
+                statusUrl: 'https://www.netlifystatus.com/api/v2/status.json',
+                pageUrl: 'https://www.netlifystatus.com',
+                category: 'Developer'
+            },
+            {
+                name: 'Docker',
+                icon: '🐳',
+                statusUrl: 'https://status.docker.com/api/v2/status.json',
+                pageUrl: 'https://status.docker.com',
+                category: 'Developer'
+            },
+            {
+                name: 'HashiCorp',
+                icon: '🔧',
+                statusUrl: 'https://status.hashicorp.com/api/v2/status.json',
+                pageUrl: 'https://status.hashicorp.com',
+                category: 'Developer'
+            },
+            {
+                name: 'Sentry',
+                icon: '🔍',
+                statusUrl: 'https://status.sentry.io/api/v2/status.json',
+                pageUrl: 'https://status.sentry.io',
+                category: 'Developer'
+            },
+
+            // === INFRASTRUCTURE & CDN ===
+            {
+                name: 'Cloudflare',
+                icon: '☁️',
+                statusUrl: 'https://www.cloudflarestatus.com/api/v2/status.json',
+                pageUrl: 'https://www.cloudflarestatus.com',
+                category: 'Infrastructure'
+            },
+            {
+                name: 'Fastly',
+                icon: '⚡',
+                statusUrl: 'https://status.fastly.com/api/v2/status.json',
+                pageUrl: 'https://status.fastly.com',
+                category: 'Infrastructure'
+            },
+
+            // === DATABASES & DATA ===
+            {
+                name: 'MongoDB Atlas',
+                icon: '🍃',
+                statusUrl: 'https://status.mongodb.com/api/v2/status.json',
+                pageUrl: 'https://status.mongodb.com',
+                category: 'Database'
+            },
+            {
+                name: 'Redis Cloud',
+                icon: '🔴',
+                statusUrl: 'https://status.redis.io/api/v2/status.json',
+                pageUrl: 'https://status.redis.io',
+                category: 'Database'
+            },
+            {
+                name: 'Datadog',
+                icon: '📊',
+                statusUrl: 'https://status.datadoghq.com/api/v2/status.json',
+                pageUrl: 'https://status.datadoghq.com',
+                category: 'Database'
+            },
+            {
+                name: 'New Relic',
+                icon: '📈',
+                statusUrl: 'https://status.newrelic.com/api/v2/status.json',
+                pageUrl: 'https://status.newrelic.com',
+                category: 'Database'
+            },
+
+            // === BUSINESS & PRODUCTIVITY ===
+            {
+                name: 'Notion',
+                icon: '📓',
+                statusUrl: 'https://status.notion.so/api/v2/status.json',
+                pageUrl: 'https://status.notion.so',
+                category: 'Business'
+            },
+            {
+                name: 'Figma',
+                icon: '🎨',
+                statusUrl: 'https://status.figma.com/api/v2/status.json',
+                pageUrl: 'https://status.figma.com',
+                category: 'Business'
+            },
+            {
+                name: 'Linear',
+                icon: '📐',
+                statusUrl: 'https://linearstatus.com/api/v2/status.json',
+                pageUrl: 'https://linearstatus.com',
+                category: 'Business'
+            },
+            {
+                name: 'Intercom',
+                icon: '💬',
+                statusUrl: 'https://www.intercomstatus.com/api/v2/status.json',
+                pageUrl: 'https://www.intercomstatus.com',
+                category: 'Business'
+            },
+
+            // === PAYMENTS ===
+            {
+                name: 'Stripe',
+                icon: '💳',
+                statusUrl: 'https://status.stripe.com/api/v2/status.json',
+                pageUrl: 'https://status.stripe.com',
+                category: 'Payments'
+            },
+            {
+                name: 'PayPal',
+                icon: '💰',
+                statusUrl: 'https://www.paypal-status.com/api/v2/status.json',
+                pageUrl: 'https://www.paypal-status.com',
+                category: 'Payments'
+            },
+            {
+                name: 'Shopify',
+                icon: '🛒',
+                statusUrl: 'https://status.shopify.com/api/v2/status.json',
+                pageUrl: 'https://status.shopify.com',
+                category: 'Payments'
+            },
+
+            // === IDENTITY & SECURITY ===
+            {
+                name: 'Okta',
+                icon: '🔐',
+                statusUrl: 'https://status.okta.com/api/v2/status.json',
+                pageUrl: 'https://status.okta.com',
+                category: 'Security'
+            },
+            {
+                name: 'Auth0',
+                icon: '🔑',
+                statusUrl: 'https://status.auth0.com/api/v2/status.json',
+                pageUrl: 'https://status.auth0.com',
+                category: 'Security'
+            },
+            {
+                name: 'PagerDuty',
+                icon: '🚨',
+                statusUrl: 'https://status.pagerduty.com/api/v2/status.json',
+                pageUrl: 'https://status.pagerduty.com',
+                category: 'Security'
+            },
+
+            // === SOCIAL & CONSUMER ===
+            {
+                name: 'Reddit',
+                icon: '🤖',
+                statusUrl: 'https://www.redditstatus.com/api/v2/status.json',
+                pageUrl: 'https://www.redditstatus.com',
+                category: 'Social'
+            },
+            {
+                name: 'Dropbox',
+                icon: '📦',
+                statusUrl: 'https://status.dropbox.com/api/v2/status.json',
+                pageUrl: 'https://status.dropbox.com',
+                category: 'Social'
+            },
+            {
+                name: 'Box',
+                icon: '📁',
+                statusUrl: 'https://status.box.com/api/v2/status.json',
+                pageUrl: 'https://status.box.com',
+                category: 'Social'
             }
         ];
 
@@ -380,26 +688,99 @@
             }
         }
 
+        // Parse different status API formats
+        function parseStatusResponse(service, data) {
+            // Standard Statuspage.io format
+            if (data.status && data.status.indicator !== undefined) {
+                return {
+                    indicator: data.status.indicator,
+                    description: data.status.description || 'Status available'
+                };
+            }
+
+            // Slack API format
+            if (data.status !== undefined && typeof data.status === 'string') {
+                const slackStatus = data.status.toLowerCase();
+                if (slackStatus === 'ok' || slackStatus === 'active') {
+                    return { indicator: 'none', description: 'All Systems Operational' };
+                } else if (slackStatus === 'active incident' || slackStatus === 'notice') {
+                    return { indicator: 'minor', description: data.status };
+                } else {
+                    return { indicator: 'major', description: data.status };
+                }
+            }
+
+            // AWS format - check for current events/issues
+            if (data.archive || data.current) {
+                const hasIssues = (data.current && data.current.length > 0);
+                if (hasIssues) {
+                    return { indicator: 'minor', description: 'Service issues reported' };
+                }
+                return { indicator: 'none', description: 'All Systems Operational' };
+            }
+
+            // Google Apps Status format
+            if (Array.isArray(data)) {
+                const hasIssues = data.some(item =>
+                    item.status && item.status !== 'AVAILABLE' && item.status !== 'OK'
+                );
+                if (hasIssues) {
+                    return { indicator: 'minor', description: 'Some services experiencing issues' };
+                }
+                return { indicator: 'none', description: 'All Systems Operational' };
+            }
+
+            // Google Cloud incidents format
+            if (data.incidents || data.most_recent_incidents) {
+                const incidents = data.incidents || data.most_recent_incidents || [];
+                const activeIncidents = incidents.filter(i =>
+                    i.end === undefined || i.end === null || i.currently_affected_locations
+                );
+                if (activeIncidents.length > 0) {
+                    return { indicator: 'minor', description: `${activeIncidents.length} active incident(s)` };
+                }
+                return { indicator: 'none', description: 'All Systems Operational' };
+            }
+
+            // If we got valid JSON but can't parse the format, assume operational
+            // (better UX than showing unknown for working services)
+            return { indicator: 'none', description: 'Status page accessible' };
+        }
+
         // Fetch status for a single service
         async function fetchServiceStatus(service) {
             try {
-                const response = await fetch(service.statusUrl);
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
+                const response = await fetch(service.statusUrl, {
+                    signal: controller.signal,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                clearTimeout(timeoutId);
+
                 if (!response.ok) throw new Error('Network response was not ok');
                 const data = await response.json();
+                const parsed = parseStatusResponse(service, data);
+
                 return {
                     name: service.name,
                     icon: service.icon,
                     pageUrl: service.pageUrl,
-                    indicator: data.status.indicator,
-                    description: data.status.description
+                    category: service.category,
+                    indicator: parsed.indicator,
+                    description: parsed.description
                 };
             } catch (error) {
                 return {
                     name: service.name,
                     icon: service.icon,
                     pageUrl: service.pageUrl,
+                    category: service.category,
                     indicator: 'unknown',
-                    description: 'Unable to fetch status'
+                    description: error.name === 'AbortError' ? 'Request timeout' : 'Unable to fetch status'
                 };
             }
         }
@@ -407,6 +788,15 @@
         // Render the status table
         function renderTable(statuses) {
             const tbody = document.getElementById('status-body');
+
+            // Sort by category then name for better organization
+            const categoryOrder = ['Cloud', 'Microsoft', 'Google', 'Communication', 'Developer', 'Infrastructure', 'Database', 'Business', 'Payments', 'Security', 'Social'];
+            statuses.sort((a, b) => {
+                const catA = categoryOrder.indexOf(a.category) !== -1 ? categoryOrder.indexOf(a.category) : 999;
+                const catB = categoryOrder.indexOf(b.category) !== -1 ? categoryOrder.indexOf(b.category) : 999;
+                if (catA !== catB) return catA - catB;
+                return a.name.localeCompare(b.name);
+            });
 
             let html = '';
             for (const status of statuses) {
@@ -419,6 +809,7 @@
                             <a href="${status.pageUrl}" target="_blank" rel="noopener" class="service-name" style="color: inherit; text-decoration: none;">
                                 <span class="service-icon">${status.icon}</span>
                                 ${status.name}
+                                <span class="category-badge">${status.category || 'Other'}</span>
                             </a>
                         </td>
                         <td>
@@ -433,6 +824,9 @@
             }
 
             tbody.innerHTML = html;
+
+            // Update service count
+            document.getElementById('service-count').textContent = statuses.length;
         }
 
         // Update summary counts
@@ -471,12 +865,14 @@
 
             // Show loading state
             const tbody = document.getElementById('status-body');
+            document.getElementById('service-count').textContent = services.length;
             tbody.innerHTML = services.map(service => `
                 <tr>
                     <td>
                         <span class="service-name">
                             <span class="service-icon">${service.icon}</span>
                             ${service.name}
+                            <span class="category-badge">${service.category || 'Other'}</span>
                         </span>
                     </td>
                     <td>
