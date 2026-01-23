@@ -13,10 +13,10 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: #f8fafc;
             min-height: 100vh;
             padding: 40px 20px;
-            color: #fff;
+            color: #1e293b;
         }
 
         .container {
@@ -26,19 +26,19 @@
 
         .category-badge {
             display: inline-block;
-            padding: 2px 8px;
-            border-radius: 10px;
+            padding: 3px 10px;
+            border-radius: 12px;
             font-size: 0.7rem;
             font-weight: 500;
-            margin-left: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            color: #8892b0;
+            margin-left: 10px;
+            background: #e2e8f0;
+            color: #64748b;
         }
 
         .service-count {
-            color: #8892b0;
+            color: #64748b;
             font-size: 0.9rem;
-            margin-top: 5px;
+            margin-top: 8px;
         }
 
         header {
@@ -47,56 +47,57 @@
         }
 
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 10px;
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #0f172a;
+            font-weight: 600;
         }
 
         .subtitle {
-            color: #8892b0;
-            font-size: 1.1rem;
+            color: #64748b;
+            font-size: 1rem;
+            font-weight: 400;
         }
 
         .last-updated {
-            color: #64748b;
-            font-size: 0.9rem;
-            margin-top: 15px;
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-top: 12px;
         }
 
         .status-table {
             width: 100%;
             border-collapse: collapse;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
+            background: #ffffff;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
         }
 
         .status-table th,
         .status-table td {
-            padding: 18px 24px;
+            padding: 16px 24px;
             text-align: left;
         }
 
         .status-table th {
-            background: rgba(255, 255, 255, 0.1);
+            background: #f8fafc;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             letter-spacing: 0.5px;
-            color: #a0aec0;
+            color: #64748b;
+            border-bottom: 1px solid #e2e8f0;
         }
 
         .status-table tr {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: background 0.2s ease;
+            border-bottom: 1px solid #f1f5f9;
+            transition: background 0.15s ease;
         }
 
-        .status-table tr:hover {
-            background: rgba(255, 255, 255, 0.03);
+        .status-table tbody tr:hover {
+            background: #f8fafc;
         }
 
         .status-table tr:last-child {
@@ -108,17 +109,18 @@
             align-items: center;
             gap: 12px;
             font-weight: 500;
+            color: #1e293b;
         }
 
         .service-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
-            background: rgba(255, 255, 255, 0.1);
+            background: #f1f5f9;
         }
 
         .status-badge {
@@ -127,7 +129,7 @@
             gap: 8px;
             padding: 6px 14px;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 500;
         }
 
@@ -144,8 +146,8 @@
         }
 
         .status-operational {
-            background: rgba(16, 185, 129, 0.15);
-            color: #10b981;
+            background: #ecfdf5;
+            color: #059669;
         }
 
         .status-operational .status-dot {
@@ -153,8 +155,8 @@
         }
 
         .status-degraded {
-            background: rgba(245, 158, 11, 0.15);
-            color: #f59e0b;
+            background: #fffbeb;
+            color: #d97706;
         }
 
         .status-degraded .status-dot {
@@ -162,8 +164,8 @@
         }
 
         .status-outage {
-            background: rgba(239, 68, 68, 0.15);
-            color: #ef4444;
+            background: #fef2f2;
+            color: #dc2626;
         }
 
         .status-outage .status-dot {
@@ -171,18 +173,18 @@
         }
 
         .status-unknown {
-            background: rgba(107, 114, 128, 0.15);
-            color: #6b7280;
+            background: #f1f5f9;
+            color: #64748b;
         }
 
         .status-unknown .status-dot {
-            background: #6b7280;
+            background: #94a3b8;
             animation: none;
         }
 
         .status-loading {
-            background: rgba(59, 130, 246, 0.15);
-            color: #3b82f6;
+            background: #eff6ff;
+            color: #2563eb;
         }
 
         .status-loading .status-dot {
@@ -190,45 +192,52 @@
         }
 
         .description {
-            color: #8892b0;
-            font-size: 0.9rem;
+            color: #64748b;
+            font-size: 0.85rem;
         }
 
         .refresh-btn {
             display: block;
             margin: 30px auto 0;
-            padding: 12px 30px;
-            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            padding: 12px 28px;
+            background: #0f172a;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             color: #fff;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.2s ease;
         }
 
         .refresh-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+            background: #1e293b;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
         }
 
         .refresh-btn:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
             transform: none;
+            box-shadow: none;
         }
 
         .summary {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            margin-bottom: 30px;
+            gap: 48px;
+            margin-bottom: 32px;
             flex-wrap: wrap;
         }
 
         .summary-item {
             text-align: center;
+            padding: 20px 28px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e2e8f0;
         }
 
         .summary-count {
@@ -237,21 +246,44 @@
         }
 
         .summary-label {
-            font-size: 0.85rem;
-            color: #8892b0;
+            font-size: 0.8rem;
+            color: #64748b;
             margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .operational-count { color: #10b981; }
-        .issues-count { color: #f59e0b; }
-        .outage-count { color: #ef4444; }
+        .operational-count { color: #059669; }
+        .issues-count { color: #d97706; }
+        .outage-count { color: #dc2626; }
+
+        .cors-note {
+            text-align: center;
+            margin-top: 24px;
+            padding: 12px 20px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .cors-note a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .cors-note a:hover {
+            text-decoration: underline;
+        }
 
         @media (max-width: 600px) {
-            h1 { font-size: 1.8rem; }
+            body { padding: 20px 16px; }
+            h1 { font-size: 1.6rem; }
             .status-table th,
             .status-table td { padding: 12px 16px; }
             .description { display: none; }
-            .summary { gap: 20px; }
+            .summary { gap: 12px; }
+            .summary-item { padding: 16px 20px; }
         }
     </style>
 </head>
@@ -299,9 +331,26 @@
         <button class="refresh-btn" id="refresh-btn" onclick="refreshStatus()">
             Refresh Status
         </button>
+
+        <div class="cors-note">
+            Status data fetched via public APIs. Some services may show "Unknown" due to network restrictions.
+            <br>Click on any service to visit their official status page.
+        </div>
     </div>
 
     <script>
+        // CORS proxy configuration for browser-based requests
+        // Most status APIs don't allow direct browser requests, so we use a proxy
+        const CORS_PROXIES = [
+            'https://api.allorigins.win/raw?url=',
+            'https://corsproxy.io/?'
+        ];
+        let currentProxyIndex = 0;
+
+        function getCorsProxyUrl(url) {
+            return CORS_PROXIES[currentProxyIndex] + encodeURIComponent(url);
+        }
+
         // Service configurations with their public status API endpoints
         // These services use Statuspage.io which provides a standard API format
         const services = [
@@ -633,10 +682,54 @@
                 category: 'Security'
             },
 
+            // === AI & ML SERVICES ===
+            {
+                name: 'OpenAI',
+                icon: '🤖',
+                statusUrl: 'https://status.openai.com/api/v2/status.json',
+                pageUrl: 'https://status.openai.com',
+                category: 'AI'
+            },
+            {
+                name: 'Anthropic',
+                icon: '🧠',
+                statusUrl: 'https://status.anthropic.com/api/v2/status.json',
+                pageUrl: 'https://status.anthropic.com',
+                category: 'AI'
+            },
+            {
+                name: 'Hugging Face',
+                icon: '🤗',
+                statusUrl: 'https://status.huggingface.co/api/v2/status.json',
+                pageUrl: 'https://status.huggingface.co',
+                category: 'AI'
+            },
+            {
+                name: 'Stability AI',
+                icon: '🎨',
+                statusUrl: 'https://status.stability.ai/api/v2/status.json',
+                pageUrl: 'https://status.stability.ai',
+                category: 'AI'
+            },
+            {
+                name: 'Replicate',
+                icon: '🔄',
+                statusUrl: 'https://status.replicate.com/api/v2/status.json',
+                pageUrl: 'https://status.replicate.com',
+                category: 'AI'
+            },
+            {
+                name: 'Cohere',
+                icon: '💬',
+                statusUrl: 'https://status.cohere.com/api/v2/status.json',
+                pageUrl: 'https://status.cohere.com',
+                category: 'AI'
+            },
+
             // === SOCIAL & CONSUMER ===
             {
                 name: 'Reddit',
-                icon: '🤖',
+                icon: '📱',
                 statusUrl: 'https://www.redditstatus.com/api/v2/status.json',
                 pageUrl: 'https://www.redditstatus.com',
                 category: 'Social'
@@ -747,42 +840,55 @@
             return { indicator: 'none', description: 'Status page accessible' };
         }
 
-        // Fetch status for a single service
+        // Fetch status for a single service with CORS proxy fallback
         async function fetchServiceStatus(service) {
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+            // Try direct fetch first, then fallback to CORS proxies
+            const urlsToTry = [
+                service.statusUrl,
+                ...CORS_PROXIES.map(proxy => proxy + encodeURIComponent(service.statusUrl))
+            ];
 
-                const response = await fetch(service.statusUrl, {
-                    signal: controller.signal,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-                clearTimeout(timeoutId);
+            for (const url of urlsToTry) {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8s timeout
 
-                if (!response.ok) throw new Error('Network response was not ok');
-                const data = await response.json();
-                const parsed = parseStatusResponse(service, data);
+                    const response = await fetch(url, {
+                        signal: controller.signal,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    clearTimeout(timeoutId);
 
-                return {
-                    name: service.name,
-                    icon: service.icon,
-                    pageUrl: service.pageUrl,
-                    category: service.category,
-                    indicator: parsed.indicator,
-                    description: parsed.description
-                };
-            } catch (error) {
-                return {
-                    name: service.name,
-                    icon: service.icon,
-                    pageUrl: service.pageUrl,
-                    category: service.category,
-                    indicator: 'unknown',
-                    description: error.name === 'AbortError' ? 'Request timeout' : 'Unable to fetch status'
-                };
+                    if (!response.ok) continue; // Try next URL
+
+                    const data = await response.json();
+                    const parsed = parseStatusResponse(service, data);
+
+                    return {
+                        name: service.name,
+                        icon: service.icon,
+                        pageUrl: service.pageUrl,
+                        category: service.category,
+                        indicator: parsed.indicator,
+                        description: parsed.description
+                    };
+                } catch (error) {
+                    // Continue to next URL on error
+                    continue;
+                }
             }
+
+            // All attempts failed
+            return {
+                name: service.name,
+                icon: service.icon,
+                pageUrl: service.pageUrl,
+                category: service.category,
+                indicator: 'unknown',
+                description: 'Unable to fetch status'
+            };
         }
 
         // Render the status table
@@ -790,7 +896,7 @@
             const tbody = document.getElementById('status-body');
 
             // Sort by category then name for better organization
-            const categoryOrder = ['Cloud', 'Microsoft', 'Google', 'Communication', 'Developer', 'Infrastructure', 'Database', 'Business', 'Payments', 'Security', 'Social'];
+            const categoryOrder = ['Cloud', 'AI', 'Microsoft', 'Google', 'Communication', 'Developer', 'Infrastructure', 'Database', 'Business', 'Payments', 'Security', 'Social'];
             statuses.sort((a, b) => {
                 const catA = categoryOrder.indexOf(a.category) !== -1 ? categoryOrder.indexOf(a.category) : 999;
                 const catB = categoryOrder.indexOf(b.category) !== -1 ? categoryOrder.indexOf(b.category) : 999;
